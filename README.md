@@ -10,3 +10,4 @@
 8. Añadir La función que sube las imagenes como iconos
 9.  Añadir la función que hace que el ratón tenga pointer
 10. Crear la función que hace poder acercarte y centrarte a cada cluster
+11. 
