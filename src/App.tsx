@@ -158,7 +158,7 @@ function App() {
 		})
 	}
 
-	//Funcion de añadir pointer al mouse
+	//Function to add pointer to mouse
 	const mouseEnterLeave = (evt: MapMouseEvent) => {
 		if (!map) return
 		if (evt.type === 'mouseenter') {
@@ -169,7 +169,7 @@ function App() {
 	}
 
 	//Cluster center, zoom and spiderfy
-	const centerMapToCluster = async (evt: MapMouseEvent) => {
+	const centerMapToCluster = (evt: MapMouseEvent) => {
 		if (!map) return
 		const features = map.queryRenderedFeatures(evt.point, {
 			layers: ['clusters'],
@@ -186,7 +186,7 @@ function App() {
 				if (err) return
 				if (!zoom) return
 				if (zoom > clusterMaxZoom) {
-					spiderFyCluster(source, clusterId, lngLat)
+					spiderfyCluster(source, clusterId, lngLat)
 					map.easeTo({
 						center: lngLat,
 					})
@@ -200,7 +200,7 @@ function App() {
 		}
 	}
 
-	//Funcion para caluclar el offset en circulo de las observaciones
+	//Function to calculate the circle offset of the observations
 	const calculateSpiderfiedPositionsCircle = (count: number) => {
 		const leavesSeparation = 80
 		const leavesOffset = [0, 0]
@@ -216,7 +216,7 @@ function App() {
 		}
 		return points
 	}
-	//Funcion para caluclar el offset en espiral de las observaciones
+	//Function to calculate the spiral offset of the observations
 	const calculateSpiderfiedPositions = (count: number) => {
 		const legLengthStart = 25
 		const legLengthFactor = 5
@@ -238,7 +238,7 @@ function App() {
 	}
 
 	//Funcion para crear el GEOJSON de los markers spiderfy
-	const spiderFyCluster = async (
+	const spiderfyCluster = (
 		source: GeoJSONSource,
 		clusterId: number,
 		lngLat: LngLat
@@ -306,19 +306,18 @@ function App() {
 	useEffect(() => {
 		if (map) {
 			map.on('load', () => {
+				addIconImages()
 				createLayers()
 				createSpiderFyLayers()
-				addIconImages()
 			})
-			map.on('click', 'clusters', async (e) => {
-				centerMapToCluster(e)
-			})
-			map.on('mouseenter', 'clusters', mouseEnterLeave)
-			map.on('mouseleave', 'clusters', mouseEnterLeave)
+			map.on('click', 'clusters', centerMapToCluster)
 
 			map.on('click', deletePointsSpiderfy)
 			map.on('zoomstart', deletePointsSpiderfy)
 			map.on('touchstart', deletePointsSpiderfy)
+
+			map.on('mouseenter', 'clusters', mouseEnterLeave)
+			map.on('mouseleave', 'clusters', mouseEnterLeave)
 		}
 	}, [map])
 
