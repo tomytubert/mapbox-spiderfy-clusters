@@ -9,13 +9,14 @@ import mapboxgl, {
 import './App.css'
 
 function App() {
+	const clusterMaxZoom = 12
 	const mapOptions: MapOptions = {
 		container: 'map',
-		style: 'mapbox://styles/mapbox/streets-v12',
+		style: 'mapbox://styles/mapbox/dark-v11',
 		center: [-103.59179687498357, 40.66995747013945], // starting position [lng, lat]
 		zoom: 2, // starting zoom
+		maxZoom: clusterMaxZoom,
 	}
-	const clusterMaxZoom = 12
 	const [map, setMap] = useState<Map | null>(null)
 
 	//Add Icon Images to Map
@@ -315,6 +316,7 @@ function App() {
 			map.on('mouseenter', 'clusters', mouseEnterLeave)
 			map.on('mouseleave', 'clusters', mouseEnterLeave)
 
+			map.on('click', deletePointsSpiderfy)
 			map.on('zoomstart', deletePointsSpiderfy)
 			map.on('touchstart', deletePointsSpiderfy)
 		}
@@ -324,7 +326,7 @@ function App() {
 		<>
 			<h1>Spiderfy clusters</h1>
 			<div id='map'></div>
-			<h3> by Tomas Tubert</h3>
+			<h3>done by <a href='https://www.linkedin.com/in/tomas-tubert-gonzalez/'>Tomas Tubert</a></h3>
 		</>
 	)
 }
