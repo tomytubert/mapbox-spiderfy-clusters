@@ -6,7 +6,7 @@ import './index.css'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl'
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string
+mapboxgl.accessToken = process.env.VITE_MAPBOX_ACCESS_TOKEN || import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
